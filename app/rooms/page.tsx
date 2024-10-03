@@ -1,7 +1,9 @@
 "use client";
 import { databases } from "@/libs/appwriteConfig";
 import React, { useState, useEffect } from "react";
-import { ID, Query } from "appwrite";
+import { ID } from "appwrite";
+import fetchMessage from "@/libs/fetchMessage";
+import MessageList from "../components/MessageList";
 
 const page = () => {
   const [messages, setMessages] = useState<
@@ -14,11 +16,7 @@ const page = () => {
   }, []);
 
   const getMessages = async () => {
-    const response = await databases.listDocuments(
-      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
-      process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_MESSAGES!,
-      [Query.orderDesc("$createdAt")]
-    );
+    const response = await fetchMessage();
     console.log(response);
     setMessages(
       response.documents as unknown as {
@@ -72,17 +70,7 @@ const page = () => {
           </div>
         </form>
         <div>
-          {messages.map((message) => (
-            <div key={message.$id} className="message--wrapper">
-              <div className="message--header">
-                <small>{message.$createdAt}</small>
-              </div>
-
-              <div className="message--body">
-                <span>{message.body}</span>
-              </div>
-            </div>
-          ))}
+          <MessageList messages={messages} />
         </div>
       </div>
     </main>
