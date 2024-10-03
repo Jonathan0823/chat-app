@@ -184,7 +184,7 @@ color: rgb(164, 161, 161);
 .delete--btn{
 color:#8db3dd;
 cursor: pointer;
-transition: 0.3s;
+transition: 0.3s all;
 width: 16px;
 }
 

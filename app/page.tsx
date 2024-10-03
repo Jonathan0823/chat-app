@@ -47,7 +47,7 @@ const page = () => {
     <main className="container">
       <div className="room--container">
         <div className="flex justify-center ">
-        <h1 className="flex justify-center bg-red-500 w-52 mb-5 py-4 rounded-2xl">Chat Room</h1>
+        <h1 className="flex justify-center bg-[#db2518] w-52 mb-5 py-4 rounded-2xl">Chat Room</h1>
         </div>
           <MessageInput onMessageSent={getMessages} />
         <div>
