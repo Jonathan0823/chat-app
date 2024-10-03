@@ -4,10 +4,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 interface MessageListProps {
   messages: { $id: string; body: string; $createdAt: string }[];
-  onMessageDeleted: () => void; // Callback to refresh messages after deletion
 }
 
-const MessageList = ({ messages, onMessageDeleted }: MessageListProps) => {
+const MessageList = ({ messages }: MessageListProps) => {
   const handleDelete = async (messageId: string) => {
     try {
       await databases.deleteDocument(
@@ -15,7 +14,6 @@ const MessageList = ({ messages, onMessageDeleted }: MessageListProps) => {
         process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_MESSAGES!,
         messageId
       );
-      onMessageDeleted(); // Refresh messages after deletion
     } catch (error) {
       console.error('Failed to delete message:', error);
     }

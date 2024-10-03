@@ -4,11 +4,9 @@ import { ID } from 'appwrite';
 import { on } from 'events';
 import React from 'react'
 
-interface MessageInputProps {
-    onMessageSent: () => void;
-}
 
-const MessageInput = ({onMessageSent}: MessageInputProps) => {
+
+const MessageInput = () => {
     const [message, setMessage] = React.useState("");
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -21,7 +19,6 @@ const MessageInput = ({onMessageSent}: MessageInputProps) => {
         );
         console.log(response);
         setMessage("");
-        onMessageSent();
     }
   return (
     <div>

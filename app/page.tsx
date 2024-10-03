@@ -5,6 +5,7 @@ import { ID } from "appwrite";
 import fetchMessage from "@/libs/fetchMessage";
 import MessageList from "./components/MessageList";
 import MessageInput from "./components/MessageInput";
+import client from "@/libs/appwriteConfig";
 
 const page = () => {
   const [messages, setMessages] = useState<
@@ -14,11 +15,27 @@ const page = () => {
 
   useEffect(() => {
     getMessages();
+
+    const unsubscribe = client.subscribe(`databases.${process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID}.collections.${process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_MESSAGES}.documents`, response => {
+
+      if(response.events.includes("databases.*.collections.*.documents.*.create")){
+        setMessages(prevState => [response.payload as { $id: string; body: string; $createdAt: string }, ...prevState]);
+      }
+
+      if(response.events.includes("databases.*.collections.*.documents.*.delete")){
+        setMessages(prevState => prevState.filter(message => message.$id !== (response.payload as { $id: string }).$id));
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+
+
   }, []);
 
   const getMessages = async () => {
     const response = await fetchMessage();
-    console.log(response);
     setMessages(
       response.documents as unknown as {
         $id: string;
@@ -28,20 +45,7 @@ const page = () => {
     );
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const response = await databases.createDocument(
-      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
-      process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_MESSAGES!,
-      ID.unique(),
-      { body: messageBody }
-    );
-    setMessageBody("");
-    setMessages((prevState) => [
-      response as unknown as { $id: string; body: string; $createdAt: string },
-      ...prevState,
-    ]);
-  };
+
 
   return (
     <main className="container">
@@ -49,9 +53,9 @@ const page = () => {
         <div className="flex justify-center ">
         <h1 className="flex justify-center bg-[#db2518] w-52 mb-5 py-4 rounded-2xl">Chat Room</h1>
         </div>
-          <MessageInput onMessageSent={getMessages} />
+          <MessageInput />
         <div>
-          <MessageList messages={messages} onMessageDeleted={getMessages} />
+          <MessageList messages={messages}/>
         </div>
       </div>
     </main>
