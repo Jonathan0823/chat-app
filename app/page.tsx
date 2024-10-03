@@ -1,11 +1,10 @@
 "use client";
-import { databases } from "@/libs/appwriteConfig";
 import React, { useState, useEffect } from "react";
-import { ID } from "appwrite";
 import fetchMessage from "@/libs/fetchMessage";
 import MessageList from "../components/MessageList";
 import MessageInput from "../components/MessageInput";
 import client from "@/libs/appwriteConfig";
+import PrivateRoute from "@/components/PrivateRoute";
 
 const page = () => {
   const [messages, setMessages] = useState<

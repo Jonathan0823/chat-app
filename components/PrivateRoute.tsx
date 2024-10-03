@@ -1,21 +1,26 @@
 "use client";
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
 
-const PrivateRoute = () => {
-    const isLogged = true
-    const router = useRouter()
 
-    useEffect(() => {
-        if (!isLogged) {
-            router.push('/auth/signin')
-        } else {
-            router.push('/')
-        }
-    }, [isLogged])
-  return (
-    <></>
-  )
-}
+const PrivateRoute = () => {
+  const router = useRouter();
+  const isAuthenticated = true; // Check if user is authenticated
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if(isAuthenticated){
+      router.push('/');
+    } else if(pathname !== '/auth/signup'){
+      router.push('/auth/signin');
+    }
+    
+
+  }, [isAuthenticated, router]);
+
+ 
+
+  return <></>;
+};
 
 export default PrivateRoute
