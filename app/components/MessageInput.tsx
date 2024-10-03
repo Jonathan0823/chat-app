@@ -36,7 +36,9 @@ const MessageInput = () => {
                 value={message}
             ></textarea>
             </div>
-            <button type="submit" >Send</button>
+            <div className='flex w-full justify-end'>
+            <button type="submit" className=' bg-red-500 w-40 rounded-xl py-2'>Send</button>
+            </div>
         </form>
     </div>
   )
