@@ -12,7 +12,7 @@ const MessageList = ({messages}:MessageListProps) => {
           {messages.map((message) => (
             <div key={message.$id} className="message--wrapper">
               <div className="message--header">
-                <small>{message.$createdAt}</small>
+                <small>{new Date(message.$createdAt).toLocaleString()}</small>
               </div>
 
               <div className="message--body">
