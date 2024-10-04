@@ -11,7 +11,6 @@ const page = () => {
   const [messages, setMessages] = useState<
     { $id: string; body: string; $createdAt: string }[]
   >([]);
-  const [messageBody, setMessageBody] = useState("");
 
   useEffect(() => {
     getMessages();
@@ -21,7 +20,7 @@ const page = () => {
       (response) => {
         if (
           response.events.includes(
-            "databases.*.collections.*.documents.*.create"
+            `databases.*.collections.*.documents.create`
           )
         ) {
           setMessages((prevState) => [
@@ -36,7 +35,7 @@ const page = () => {
 
         if (
           response.events.includes(
-            "databases.*.collections.*.documents.*.delete"
+           `databases.*.collections.*.documents.delete`
           )
         ) {
           setMessages((prevState) =>
@@ -66,8 +65,8 @@ const page = () => {
   };
 
   return (
-    <AuthProvider>
-    <PrivateRoute>
+    // <AuthProvider>
+    // {/* <PrivateRoute> */}
     <main className="container">
       <div className="room--container">
         <div className="flex justify-center ">
@@ -81,8 +80,8 @@ const page = () => {
         </div>
       </div>
     </main>
-    </PrivateRoute>
-    </AuthProvider>
+    // {/* </PrivateRoute> */}
+    // </AuthProvider>
   );
 };
 

@@ -1,17 +1,17 @@
 "use client"
  
 import AuthForm from "@/components/AuthForm"
-import { z } from "zod"
- 
-const formSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6),
-})
+import PrivateRoute from "@/components/PrivateRoute"
+import { AuthProvider } from "@/utils/AuthContext"
 
 const SignIn = () => {
   return (
     <div>
+      <AuthProvider>
+      <PrivateRoute>
       <AuthForm type="signin" />
+      </PrivateRoute>
+      </AuthProvider>
     </div>
   )
 }
