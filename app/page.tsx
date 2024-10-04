@@ -18,6 +18,7 @@ const page = () => {
     const unsubscribe = client.subscribe(
       `databases.${process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID}.collections.${process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_MESSAGES}.documents`,
       (response) => {
+        console.log(response);
         if (
           response.events.includes(
             `databases.*.collections.*.documents.create`
@@ -65,8 +66,8 @@ const page = () => {
   };
 
   return (
-    // <AuthProvider>
-    // {/* <PrivateRoute> */}
+    <AuthProvider>
+    <PrivateRoute>
     <main className="container">
       <div className="room--container">
         <div className="flex justify-center ">
@@ -80,8 +81,8 @@ const page = () => {
         </div>
       </div>
     </main>
-    // {/* </PrivateRoute> */}
-    // </AuthProvider>
+    </PrivateRoute>
+    </AuthProvider>
   );
 };
 

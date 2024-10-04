@@ -17,7 +17,6 @@ const MessageInput = () => {
           ID.unique(),
           { body: message }
         );
-        console.log(response);
         setMessage("");
     }
   return (

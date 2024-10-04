@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -91,7 +90,7 @@ const AuthForm = ({ type }: AuthFormProps) => {
                             </FormItem>
                         )}
                     />
-                    <button type="submit" className="bg-red-500 text-white py-2 px-4 rounded">Submit</button>
+                    <Button type="submit" className="bg-red-500 hover:bg-slate-200 hover:text-black text-white py-2 px-4 rounded">Submit</Button>
                 </form>
             </Form>
         </div>
