@@ -5,6 +5,7 @@ import MessageList from "../components/MessageList";
 import MessageInput from "../components/MessageInput";
 import client from "@/libs/appwriteConfig";
 import PrivateRoute from "@/components/PrivateRoute";
+import { AuthProvider } from "@/utils/AuthContext";
 
 const page = () => {
   const [messages, setMessages] = useState<
@@ -65,6 +66,8 @@ const page = () => {
   };
 
   return (
+    <AuthProvider>
+    <PrivateRoute>
     <main className="container">
       <div className="room--container">
         <div className="flex justify-center ">
@@ -78,6 +81,8 @@ const page = () => {
         </div>
       </div>
     </main>
+    </PrivateRoute>
+    </AuthProvider>
   );
 };
 

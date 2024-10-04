@@ -1,26 +1,24 @@
 "use client";
+import React, { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import React, { useEffect } from 'react'
+import { useAuth } from '@/utils/AuthContext';
 
 
-const PrivateRoute = () => {
-  const router = useRouter();
-  const isAuthenticated = true; // Check if user is authenticated
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const { user, loading } = useAuth();
+  console.log(user);
   const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
-    if(isAuthenticated){
-      router.push('/');
-    } else if(pathname !== '/auth/signup'){
-      router.push('/auth/signin');
+    if (!user && pathname !== '/auth/signup' && !loading) {
+      router.push('/auth/signin'); // Redirect to sign-in page if not authenticated
     }
-    
+  }, [user, router, pathname, loading]);
 
-  }, [isAuthenticated, router]);
 
- 
 
-  return <></>;
+  return <>{user ? children : null}</>;
 };
 
-export default PrivateRoute
+export default ProtectedRoute;
